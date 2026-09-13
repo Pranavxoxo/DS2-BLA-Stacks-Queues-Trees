@@ -1,0 +1,140 @@
+================================================
+  OUTPUT: Stack.cpp
+================================================
+=== 1. Empty stack ===
+  Stack contents: (empty)
+  isEmpty() = true
+  Attempting to pop an empty stack:
+  STACK UNDERFLOW - nothing to pop, the stack is empty.
+
+=== 2. Pushing values ===
+  Pushed 11  (top index is now 0)
+  Pushed 22  (top index is now 1)
+  Pushed 33  (top index is now 2)
+  Stack contents (top -> bottom): 33, 22, 11
+  peek() = 33  (value is still on the stack)
+  Stack contents (top -> bottom): 33, 22, 11
+
+=== 3. Filling the stack to capacity ===
+  Pushed 44  (top index is now 3)
+  Pushed 55  (top index is now 4)
+  isFull() = true
+  Stack contents (top -> bottom): 55, 44, 33, 22, 11
+  Attempting one more push:
+  STACK OVERFLOW - cannot push 66, the array is full (capacity 5).
+
+=== 4. Popping values (LIFO order) ===
+  Popped 55 (top index is now 3)
+  Popped 44 (top index is now 2)
+  Stack contents (top -> bottom): 33, 22, 11
+  Notice 55 and 44 came off first - they went on last.
+
+=== 5. Emptying the stack completely ===
+  Popped 33 (top index is now 1)
+  Popped 22 (top index is now 0)
+  Popped 11 (top index is now -1)
+  Stack contents: (empty)
+  isEmpty() = true
+
+================================================
+  OUTPUT: CircularQueue.cpp
+================================================
+=== 1. Empty queue ===
+  Queue contents: (empty)
+  Attempting to dequeue an empty queue:
+  QUEUE UNDERFLOW - nothing to dequeue, the queue is empty.
+
+=== 2. Fill the queue completely (end reaches the last index) ===
+  Enqueued 10  -> stored at index 0  (start=0, end=0, count=1)
+  Enqueued 20  -> stored at index 1  (start=0, end=1, count=2)
+  Enqueued 30  -> stored at index 2  (start=0, end=2, count=3)
+  Enqueued 40  -> stored at index 3  (start=0, end=3, count=4)
+  Enqueued 50  -> stored at index 4  (start=0, end=4, count=5)
+  Queue contents (front -> rear): 10@0, 20@1, 30@2, 40@3, 50@4
+  Raw array slots:  [0]=10  [1]=20  [2]=30  [3]=40  [4]=50  
+  isFull() = true
+  QUEUE OVERFLOW - cannot enqueue 60, all 5 slots are in use.
+
+=== 3. Dequeue twice, freeing indices 0 and 1 ===
+  Dequeued 10 <- taken from index 0  (start=1, end=4, count=4)
+  Dequeued 20 <- taken from index 1  (start=2, end=4, count=3)
+  Queue contents (front -> rear): 30@2, 40@3, 50@4
+  Raw array slots:  [0]=_  [1]=_  [2]=30  [3]=40  [4]=50  
+  A LINEAR queue would now be stuck: end is already at the last
+  index, so it would refuse new items even though 2 slots are free.
+
+=== 4. WRAP-AROUND: end goes from index 4 back to index 0 ===
+  Enqueued 60  -> stored at index 0  (start=2, end=0, count=4)
+  Enqueued 70  -> stored at index 1  (start=2, end=1, count=5)
+  Queue contents (front -> rear): 30@2, 40@3, 50@4, 60@0, 70@1
+  Raw array slots:  [0]=60  [1]=70  [2]=30  [3]=40  [4]=50  
+  60 was stored at index 0 - the array position is reused.
+  Note the front (30) is at index 2 and the rear (70) is at index 1,
+  so the queue physically wraps past the end of the array.
+
+=== 5. Drain the queue - FIFO order is preserved through the wrap ===
+  Dequeued 30 <- taken from index 2  (start=3, end=1, count=4)
+  Dequeued 40 <- taken from index 3  (start=4, end=1, count=3)
+  Dequeued 50 <- taken from index 4  (start=0, end=1, count=2)
+  Dequeued 60 <- taken from index 0  (start=1, end=1, count=1)
+  Dequeued 70 <- taken from index 1  (start=2, end=1, count=0)
+  Queue contents: (empty)
+
+================================================
+  OUTPUT: BinarySearchTree.cpp
+================================================
+=== 1. Original array (12 values) ===
+  55, 27, 82, 19, 41, 70, 96, 27, 63, 88, 82, 12
+
+=== 2. Inserting in array order; duplicates rejected ===
+  Inserted 55
+  Inserted 27
+  Inserted 82
+  Inserted 19
+  Inserted 41
+  Inserted 70
+  Inserted 96
+  DUPLICATE 27 detected - discarded, tree unchanged
+  Inserted 63
+  Inserted 88
+  DUPLICATE 82 detected - discarded, tree unchanged
+  Inserted 12
+
+  Nodes actually inserted: 10
+  Duplicate occurrences discarded: 2  (the second 27 and the second 82)
+
+=== 3. The completed BST ===
+  (rotate 90 degrees clockwise to read normally)
+
+                96
+                        88
+        82
+                70
+                        63
+55
+                41
+        27
+                19
+                        12
+
+=== 4. Structure ===
+  Root: 55
+  Left subtree of root  starts at: 27
+  Right subtree of root starts at: 82
+  Leaves (no children): 12 41 63 88 
+
+=== 5. Predecessor and successor ===
+  Node 55 -> predecessor: 41,  successor: 63
+  Node 70 -> predecessor: 63,  successor: 82
+  Node 12 -> predecessor: none,  successor: 19
+  Node 41 -> predecessor: 27,  successor: 55
+
+=== 6. Traversals ===
+  Inorder   (L-Root-R): 12 19 27 41 55 63 70 82 88 96 
+  Preorder  (Root-L-R): 55 27 19 12 41 82 70 63 96 88 
+  Postorder (L-R-Root): 12 19 41 27 63 70 88 96 82 55 
+
+  The inorder output is in ascending order. The BST rule puts every
+  smaller value in the left subtree, so visiting left before the node
+  and the node before the right subtree emits values smallest first.
+

@@ -1,0 +1,7 @@
+stack_demo
+queue_demo
+bst_demo
+*.o
+.DS_Store
+bst
+documentation/video-and-linkedin.md
